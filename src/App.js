@@ -9,7 +9,7 @@ function App() {
   const {keyword} = useParams();
   return (
     <Routes>
-      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/search/:keyword" element={<Search />} />
       <Route path="/login" element={<Login />} />
     </Routes>
