@@ -1,24 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import { Route, Routes, useParams } from 'react-router-dom';
+import Home from './Page/Home';
+import Search from './Page/Search';
+import Login from './Page/Login';
 
 function App() {
+  const {keyword} = useParams();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route path="/search/:keyword" element={<Search />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
   );
 }
 

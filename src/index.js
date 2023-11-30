@@ -3,11 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import Header from './Components/Header';
+import Home from './Page/Home';
+import Course from './Components/Course';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CourseContainer from './Components/CourseContainer';
+import SearchResult from './Components/SearchResult';
+import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>
   </React.StrictMode>
 );
 
