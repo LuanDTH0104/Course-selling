@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { SearchIcon, UserIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import '../Style/Header.css';
 
 const Header = ({ key }) => {
   const [keyword, setKeyword] = React.useState('');
@@ -10,6 +12,15 @@ const Header = ({ key }) => {
     if (keyword === '') return;
     navigate(`/search/${keyword}`);
   }
+
+
+  const handleSignOut = () => {
+    if(sessionStorage.getItem('user') !== null){
+      sessionStorage.removeItem('user');
+      navigate('/');
+    }
+  }
+
 
 
   function handleController() {
@@ -31,8 +42,6 @@ const Header = ({ key }) => {
       }
     });
 
-
-    
   }, []);
 
 
@@ -51,10 +60,10 @@ const Header = ({ key }) => {
               <div className='mt-[10%] sm:hidden ml-[15%]' onClick={() => { handleClose() }}>
                 <i class="fa-solid fa-bars"></i>
               </div>
-              <Link to={'/home'} className='p-2 border-b-2 border-white no-underline text-sm ml-[15%] bg-indigo-600 text-white py-1 px-1' onClick={() => { handleClose() }}>
+              <Link to={'/'} className='p-2 border-b-2 border-white no-underline text-sm ml-[15%] bg-indigo-600 text-white py-1 px-1' onClick={() => { handleClose() }}>
                 <i class="fa-solid fa-house px-2"></i>Trang chủ
               </Link>
-              <Link to={'/home'} className='p-2 no-underline text-sm ml-[15%] bg-indigo-600 text-white py-1 px-1' onClick={() => { handleClose() }}>
+              <Link to={'/'} className='p-2 no-underline text-sm ml-[15%] bg-indigo-600 text-white py-1 px-1' onClick={() => { handleClose() }}>
                 <i class="fa-solid fa-qrcode px-2"></i>Kích hoạt khóa học
               </Link>
             </div>
@@ -62,7 +71,7 @@ const Header = ({ key }) => {
 
           {/* Tablet Controller */}
           <div className="hidden sm:flex items-center ">
-            <Link to={'/home'} className="flex-shrink-0">
+            <Link to={'/'} className="flex-shrink-0">
               <img
                 className="h-8 w-8"
                 src="/logo192.png"
@@ -73,7 +82,7 @@ const Header = ({ key }) => {
               <ul className="flex items-center lg:space-x-4 space-x-1">
                 <li>
                   <Link
-                    to={'/home'}
+                    to={'/'}
                     className="no-underline text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 hidden md:inline-block"
                   >
                     Trang chủ
@@ -118,22 +127,38 @@ const Header = ({ key }) => {
             </button>
 
             <div className="ml-4 flex items-center ">
-              <button
-                onClick={() => { navigate('/login') }}
-                className=" px-2 py-1 sm:px-5 sm:py-2 rounded-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Đăng nhập
-              </button>
+              {
+                sessionStorage.getItem('user') === null ?
+                  (<>
+                    <button
+                      onClick={() => { navigate('/login') }}
+                      className=" px-2 py-1 sm:px-5 sm:py-2 rounded-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      Đăng nhập
+                    </button>
 
-              <button
-                className="ml-2 px-2 py-1 sm:px-3 sm:py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-              >
-                Đăng ký
-              </button>
+                    <button
+                      className="ml-2 px-2 py-1 sm:px-3 sm:py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                    >
+                      Đăng ký
+                    </button>
+                  </>)
+                  :
+                  (<>
+                    <Dropdown data-bs-theme="white" drop='down-centered' >
+                      <Dropdown.Toggle variant="white" className='w-auto px-[20%]'>
+                        <UserIcon className="h-5 w-5 text-center" />
+                      </Dropdown.Toggle>
 
-              <button className="ml-2 p-2 rounded-md text-gray-400 hover:text-gray-500">
-                <UserIcon className="h-5 w-5" />
-              </button>
+                      <Dropdown.Menu className='w-auto'>
+                        <Dropdown.Item href="#/action-1">Tài khoản của tôi</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Khóa học của tôi</Dropdown.Item>
+                        <Dropdown.Divider/>
+                        <Dropdown.Item  className='bg-danger text-white' onClick={() => {handleSignOut()}}>Đăng xuất</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </>)
+              }
             </div>
           </div>
         </div>
