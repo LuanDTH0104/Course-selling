@@ -10,7 +10,8 @@ UserController.get('/', (req, res) => {
 
 
 // Insert User to the database
-UserController.post('/', (req, res) => {
+UserController.options('/', cors());
+UserController.post('/', cors(), (req, res) => {
   insertUser(req, res);
 });
 
