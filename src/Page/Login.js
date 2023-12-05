@@ -12,7 +12,6 @@ function Login() {
 
     async function handleLogin(e) {
         e.preventDefault();
-        console.log(email, password);
         axios.post('http://localhost:3001/hoc-vien/login', {
             email: email,
             password: password
